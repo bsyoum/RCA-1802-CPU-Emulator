@@ -1,1 +1,1 @@
-this is my readme
+COSMAC VIP Emulator
