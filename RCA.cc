@@ -96,15 +96,91 @@ void RCA1802::LDX(uint8_t opcode){
 	i = isolate_i(opcode);
 	n = isolate_n(opcode);
 	if ((i == 0xF) && (n == 0)){
-		D = memory[X];
+		D = memory[reg[X]];
 	}
 }
 
-void RCA1802::LDXA(){
+void RCA1802::LDXA(uint8_t opcode){
 	uint8_t i, n;
 	i = isolate_i(opcode);
 	n = isolate_n(opcode);
 	if ((i = 0x7) && (n == 0x2)){
-		
+		D = memory[reg[X]];
+		reg[X] += 1;	
 	}
+
 }
+
+void RCA1802::LDI(uint8_t opcode){
+	uint8_t i, n;
+	i = isolate_i(opcode);
+	n = isolate_n(opcode);
+	if ((i == 0xF) && (n == 8)){
+		D = memory[reg[P]];
+	        reg[P]++;	
+	}
+
+}
+
+void RCA1802::STR(uint8_t opcode){
+	uint8_t i, n;
+	i = isolate_i(opcode);
+	n = isolate_n(opcode);
+	memory[reg[n]] = D;
+	return; 
+
+
+}
+
+void RCA1802::STXD(uint8_t opcode){
+	uint8_t i, n;
+	i = isolate_i(opcode);
+	n = isolate_n(opcode);
+	memory[reg[X]] = D;
+	reg[X]--;
+}
+
+//Logic Operations
+
+void RCA1802::OR(uint8_t opcode){
+	D = memory[reg[X]] || D;
+}
+
+void RCA1802::ORI(uint8_t opcode){
+	D = memory[reg[P]] || D;
+	reg[P]++;
+}
+
+void RCA1802::XOR(uint8_t opcode){
+	D = ((!memory[reg[X]] & D) || (!D & memory[reg[X]]));
+	return;
+}
+
+void RCA1802::XRI(uint8_t opcode){
+	D = ((!memory[reg[P]] & D) || (!D & memory[reg[P]]));
+	reg[P]++;
+	return;
+}
+
+void RCA1802::AND(uint8_t opcode){
+	D = memory[reg[X]] && D;
+	return;
+}
+
+void RCA1802::ANI(uint8_t opcode){
+	D = memory[reg[P]] && D;
+	reg[P]++;
+	return;
+}
+
+void RCA1802::SHR(uint8_t opcode){
+	data_flag = 0b00000001 & D;
+	D = D >> 1;
+	D = D & 0b01111111
+	return;	
+}
+
+void RCA1802::SHL(uint8_t opcode){
+
+}
+

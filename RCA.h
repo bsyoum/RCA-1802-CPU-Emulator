@@ -8,14 +8,14 @@ class RCA1802 {
 		uint8_t P, N, X;
 		uint16_t A;
 		uint16_t PC;
-		bool data_flag;
+		uint8_t data_flag;
 	private:
 		uint8_t *memory;
 	public: 
 		
 	private:	
 
-		//register operations
+		//Register Operations
 		void INC(uint8_t opcode); //increments register N; 1N
 		void DEC(uint8_t opcode); //decrements register N; 2N
 		void IRX(uint8_t opcode); //increments register X; 60
@@ -25,7 +25,7 @@ class RCA1802 {
 		void GHI(uint8_t opcode); //When I = 9, the high order byte of the register specified by N replaces the byte in the D register; 9N
 		void PHI(uint8_t opcode); //When I = B, reverse of the above happens; BN
 		
-		//memory operations
+		//Memory Operations
 		void LDN(uint8_t opcode); //When I = 0 and N != 0, the external memory byte referenced by N replaces the byte in the D register
 		void LDA(uint8_t opcode); //When I = 4, same as above except address in R[N] is also incremented 
 		void LDX(uint8_t opcode); //When I = F and N = 0, memory byte in mem[R[X]] replaces byte in D reg
@@ -33,5 +33,12 @@ class RCA1802 {
 		void LDI(uint8_t opcode); //When I = F, and N = 8, mem[R[P]] replaces byte in D reg, and R[P] is incremented
    		void STR(uint8_t opcode); //When I = 5, mem[R[N]] is replaced by the byte in D 
 		void STXD(uint8_t opcode);//When I = 7 and n = 3, mem[R[X]] = D, and R[X] is decremented by 1
+		
+		//Logic Operations
 
+		void OR(uint8_t opcode);//Does a logical OR operation using memory[R[X]] as the 1st operand and D as 2nd
+		void ORI(uint8_t opcode);//OR operation, but uses memory[R[X]+1] 
+		void XOR(uint8_t opcode);//XOR operation w/memory[R[X]] and D
+		void XRI(uint8_t opcode);//XOR operation w/memory[R[P]] and D, then increments R[P]
+		void AND(uint8_t opcode); //memory[R[X]] and D
 }
