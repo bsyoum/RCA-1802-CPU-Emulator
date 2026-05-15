@@ -29,7 +29,10 @@
 - There are four basic modes of addressing in the COSMAC architecture: register, register-indirect, immediate, and stack.
 - In register addressing, the address of the operand is contained in the four lower order bits, the "N" of the instruction byte.
 - Register-indirect is a variant of indirect addressing, utilizing CPU registers as pointers to memory
- 		-
+- Unrelated to addressing modes, but COSMAC allows for multiple program counters by using any of the registers as the counter at a given time
+## 3. Instruction Repertoire: 
+### A. Intro
+- Each CPU instruction is fetched in the S0 cycle and executed in the S1 cycle, with the exception of long branch instructions, which require two S1 cycles. There are eight general classes, as noted earlier, with each instruction being designated by its two digit hex code
 
  
  
