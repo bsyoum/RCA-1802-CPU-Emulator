@@ -181,6 +181,7 @@ void RCA1802::SHR(uint8_t opcode){
 }
 
 void RCA1802::SHL(uint8_t opcode){
+	D = D >> 1;
 
 }
 
