@@ -181,7 +181,19 @@ void RCA1802::SHR(uint8_t opcode){
 }
 
 void RCA1802::SHL(uint8_t opcode){
-	D = D >> 1;
+	uint8_t move = D & 0b10000000;
+	move = move >> 7;
+	D = D << 1;
+	data_flag = move;
+	return;
 
+}
+
+void RCA1802::SHRC(uint8_t opcode){
+	D = D >> 1;
+	D = (data_flag << 7) + D;
+	data_flag = 0b00000001 & D;
+	//write logic formula fo this one
+	return;
 }
 
