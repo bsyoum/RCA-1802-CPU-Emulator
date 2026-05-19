@@ -193,7 +193,23 @@ void RCA1802::SHRC(uint8_t opcode){
 	D = D >> 1;
 	D = (data_flag << 7) + D;
 	data_flag = 0b00000001 & D;
-	//write logic formula fo this one
 	return;
+}
+
+void RCA1802::SHLC(uint8_t opcode){
+	D = D << 1;
+	D = (data_flag << 7) + D;
+	data_flag = 0b00000001 & D;
+	return;
+}
+//Arithmetic Operations
+
+void RCA1802::ADD(uint8_t opcode){
+	uint16_t sum;
+	sum = memory[reg[X]] + D;
+	data_flag = (sum > 0xFF) ? 1 : 0;
+	D = (uint8_t)(sum & 0xFF);
+	return;
+
 }
 
