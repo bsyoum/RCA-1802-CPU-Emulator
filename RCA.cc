@@ -213,3 +213,38 @@ void RCA1802::ADD(uint8_t opcode){
 
 }
 
+void RCA1802::ADC(uint8_t opcode){
+	uint16_t sum;
+        sum = memory[reg[X]] + D + data_flag;
+	data_flag = (sum > 0xFF) ? 1 : 0;
+	D = (uint8_t)(sum & 0xFF);
+	return;
+}
+
+void RCA1802::ADI(uint8_t opcode){
+	uint16_t sum;
+	sum = memory[reg[P]] + D;
+	data_flag = (sum > 0xFF) ? 1:0;
+	D = (uint8_t)(sum & 0xFF);
+	return;
+
+}
+
+void RCA1802::ADCI(uint8_t opcode){
+	uint16_t sum;
+	sum = memory[reg[P]] + D + data_flag;
+	data_flag = (sum > 0xFF) ? 1 : 0;
+	D = (uint8_t)(0xFF & sum);
+	return;
+}
+
+void RCA1802::SD(uint8_t opcode){
+	uint16_t difference;
+        difference = ~D + 1;	
+	D = memory[reg[X]] - D;
+	return;
+}
+
+void RCA1802::SDI(uint8_t opcode){
+	uint16_t 
+}
